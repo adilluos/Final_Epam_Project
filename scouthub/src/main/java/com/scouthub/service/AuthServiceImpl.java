@@ -1,5 +1,7 @@
 package com.scouthub.service;
 
+import com.scouthub.dto.LoginRequest;
+import com.scouthub.dto.LoginResponse;
 import com.scouthub.dto.PlayerRegistrationRequest;
 import com.scouthub.dto.ScoutRegistrationRequest;
 import com.scouthub.model.Player;
@@ -11,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 public class AuthServiceImpl implements AuthService{
@@ -69,5 +71,30 @@ public class AuthServiceImpl implements AuthService{
         scout.setSigned(false);
 
         return scoutRepository.save(scout);
+    }
+
+    @Override
+    public LoginResponse login(LoginRequest request) {
+        String usernameOrEmail = request.getUsernameOrEmail();
+        String rawPassword = request.getPassword();
+
+        Optional<? extends UserAccount> userOptional = playerRepository
+                .findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
+                .map(user -> (UserAccount) user);
+
+        if (userOptional.isEmpty()) {
+            userOptional = scoutRepository
+                    .findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
+                    .map(user -> (UserAccount) user);
+        }
+
+        if (userOptional.isPresent()) {
+            UserAccount user = userOptional.get();
+            if (passwordEncoder.matches(rawPassword, user.getPassword())) {
+                return new LoginResponse(true, "Login successful as " + user.getUsername() + " " + user.getRole());
+            }
+        }
+
+        return new LoginResponse(false, "Invalid username/email or password");
     }
 }

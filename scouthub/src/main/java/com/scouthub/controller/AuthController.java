@@ -1,5 +1,7 @@
 package com.scouthub.controller;
 
+import com.scouthub.dto.LoginRequest;
+import com.scouthub.dto.LoginResponse;
 import com.scouthub.dto.PlayerRegistrationRequest;
 import com.scouthub.dto.ScoutRegistrationRequest;
 import com.scouthub.model.Player;
@@ -29,6 +31,12 @@ public class AuthController {
     public ResponseEntity<?> registerScout(@RequestBody ScoutRegistrationRequest request) {
         Scout created = authService.registerScout(request);
         return ResponseEntity.ok(created);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        LoginResponse responce = authService.login(request);
+        return responce.isSuccess() ? ResponseEntity.ok(responce) : ResponseEntity.status(401).body(responce);
     }
 
 }
