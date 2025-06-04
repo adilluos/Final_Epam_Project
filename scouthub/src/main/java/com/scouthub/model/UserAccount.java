@@ -28,6 +28,7 @@ public abstract class UserAccount {
 
     @Column(nullable = false, unique = true)
     private String email;
+    private String phone;
 
     private String name;
     private String surname;
