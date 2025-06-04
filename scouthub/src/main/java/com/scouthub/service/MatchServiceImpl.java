@@ -1,7 +1,9 @@
 package com.scouthub.service;
 
 import com.scouthub.model.Match;
+import com.scouthub.model.MatchStats;
 import com.scouthub.repository.MatchRepository;
+import com.scouthub.repository.MatchStatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +14,25 @@ import java.util.Optional;
 public class MatchServiceImpl implements MatchService{
 
     private final MatchRepository matchRepository;
+    private final MatchStatsRepository matchStatsRepository;
 
     @Autowired
-    public MatchServiceImpl(MatchRepository matchRepository) {
+    public MatchServiceImpl(MatchRepository matchRepository, MatchStatsRepository matchStatsRepository) {
         this.matchRepository = matchRepository;
+        this.matchStatsRepository = matchStatsRepository;
     }
 
     @Override
     public Match createMatch(Match match) {
-        return matchRepository.save(match);
+        MatchStats stats = match.getStats();
+        match.setStats(null);
+        Match savedMatch = matchRepository.save(match);
+        if (stats != null) {
+            stats.setMatch(savedMatch);
+            savedMatch.setStats(stats);
+            matchStatsRepository.save(stats);
+        }
+        return savedMatch;
     }
 
     @Override
