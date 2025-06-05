@@ -36,4 +36,12 @@ public class OfferController {
     public List<OfferResponse> playerOffers(@PathVariable Long playerId) {
         return offerService.getOffersByPlayer(playerId);
     }
+
+    @PutMapping("/{offerId}/respond")
+    public ResponseEntity<String> respondToOffer(@PathVariable Long offerId,
+                                                 @RequestParam Offer.Status status,
+                                                 @RequestParam Long playerId) {
+        offerService.respondToOffer(offerId, status, playerId);
+        return ResponseEntity.ok("Offer " + status.name().toLowerCase());
+    }
 }

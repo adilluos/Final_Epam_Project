@@ -82,6 +82,27 @@ public class OfferServiceImpl implements OfferService{
                 .toList();
     }
 
+    @Override
+    public void respondToOffer(Long offerId, Offer.Status status, Long playerId) {
+        Offer offer = offerRepository.findById(offerId)
+                .orElseThrow(() -> new IllegalArgumentException("Offer not found"));
+
+        if (!offer.getPlayer().getId().equals(playerId)) {
+            throw new SecurityException("You are not authorized to respond to this offer");
+        }
+
+        if (offer.getStatus() != Offer.Status.SENT) {
+            throw new IllegalStateException("Offer already responded to");
+        }
+
+        if (status != Offer.Status.ACCEPTED && status != Offer.Status.DECLINED) {
+            throw new IllegalArgumentException("Invalid response status");
+        }
+
+        offer.setStatus(status);
+        offerRepository.save(offer);
+    }
+
     private OfferResponse toDto(Offer offer) {
         OfferResponse dto = new OfferResponse();
         dto.setId(offer.getId());

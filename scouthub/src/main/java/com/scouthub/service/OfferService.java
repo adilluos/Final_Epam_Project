@@ -15,4 +15,5 @@ public interface OfferService {
 
     List<OfferResponse> getOffersByScout(Long scoutId);
     List<OfferResponse> getOffersByPlayer(Long playerId);
+    void respondToOffer(Long offerId, Offer.Status status, Long playerId);
 }
