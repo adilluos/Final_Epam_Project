@@ -1,5 +1,6 @@
 package com.scouthub.service;
 
+import com.scouthub.dto.NotificationDto;
 import com.scouthub.dto.OfferRequest;
 import com.scouthub.dto.OfferResponse;
 import com.scouthub.model.Offer;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OfferServiceImpl implements OfferService{
@@ -103,6 +105,43 @@ public class OfferServiceImpl implements OfferService{
         offerRepository.save(offer);
     }
 
+    @Override
+    public List<NotificationDto> getNotificationsForPlayer(Long playerId) {
+        return offerRepository.findByPlayerId(playerId).stream()
+                .map(offer -> new NotificationDto(
+                        offer.getId(),
+                        offer.getScout().getName() + " " + offer.getScout().getSurname() + " sent you an offer.",
+                        offer.getContractType(),
+                        offer.getSalary(),
+                        offer.getContactEmail(),
+                        offer.getContactPhone(),
+                        offer.getScout().getName() + offer.getScout().getSurname(),
+                        offer.getPlayer().getName() +offer.getPlayer().getSurname(),
+                        offer.getStatus().toString(),
+                        offer.getTimestamp()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<NotificationDto> getNotificationsForScout(Long scoutId) {
+        return offerRepository.findByScoutId(scoutId).stream()
+                .filter(offer -> offer.getStatus() != Offer.Status.SENT)
+                .map(offer -> new NotificationDto(
+                        offer.getId(),
+                        offer.getScout().getName() + " " + offer.getScout().getSurname() + " sent you an offer.",
+                        offer.getContractType(),
+                        offer.getSalary(),
+                        offer.getContactEmail(),
+                        offer.getContactPhone(),
+                        offer.getScout().getName() + offer.getScout().getSurname(),
+                        offer.getPlayer().getName() +offer.getPlayer().getSurname(),
+                        offer.getStatus().toString(),
+                        offer.getTimestamp()
+                ))
+                .collect(Collectors.toList());
+    }
+
     private OfferResponse toDto(Offer offer) {
         OfferResponse dto = new OfferResponse();
         dto.setId(offer.getId());
@@ -115,6 +154,27 @@ public class OfferServiceImpl implements OfferService{
         dto.setTimestamp(offer.getTimestamp());
         dto.setScoutId(offer.getScout().getId());
         dto.setPlayerId(offer.getPlayer().getId());
+        return dto;
+    }
+
+    public static NotificationDto toNotificationDto(Offer offer) {
+        NotificationDto dto = new NotificationDto();
+        dto.setOfferId(offer.getId());
+        dto.setMessage(offer.getMessage());
+        dto.setContractType(offer.getContractType());
+        dto.setSalary(offer.getSalary());
+        dto.setContactEmail(offer.getContactEmail());
+        dto.setContactPhone(offer.getContactPhone());
+        dto.setStatus(offer.getStatus().name());
+        dto.setTimestamp(offer.getTimestamp());
+
+        if (offer.getScout() != null) {
+            dto.setSenderName(offer.getScout().getName() + " " + offer.getScout().getSurname());
+        }
+        if (offer.getPlayer() != null) {
+            dto.setRecipientName(offer.getPlayer().getName() + " " + offer.getPlayer().getSurname());
+        }
+
         return dto;
     }
 }

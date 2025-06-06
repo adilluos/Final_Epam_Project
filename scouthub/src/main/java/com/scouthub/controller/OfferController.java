@@ -1,6 +1,7 @@
 package com.scouthub.controller;
 
 
+import com.scouthub.dto.NotificationDto;
 import com.scouthub.dto.OfferRequest;
 import com.scouthub.dto.OfferResponse;
 import com.scouthub.model.Offer;
@@ -43,5 +44,15 @@ public class OfferController {
                                                  @RequestParam Long playerId) {
         offerService.respondToOffer(offerId, status, playerId);
         return ResponseEntity.ok("Offer " + status.name().toLowerCase());
+    }
+
+    @GetMapping("/notifications/player/{playerId}")
+    public List<NotificationDto> getPlayerNotifications(@PathVariable Long playerId) {
+        return offerService.getNotificationsForPlayer(playerId);
+    }
+
+    @GetMapping("/notifications/scout/{scoutId}")
+    public List<NotificationDto> getScoutNotifications(@PathVariable Long scoutId) {
+        return offerService.getNotificationsForScout(scoutId);
     }
 }

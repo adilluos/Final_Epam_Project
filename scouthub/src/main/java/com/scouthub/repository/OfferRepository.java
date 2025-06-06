@@ -10,4 +10,6 @@ import java.util.List;
 public interface OfferRepository extends JpaRepository<Offer, Long> {
     List<Offer> findByScoutId(Long scoutId);
     List<Offer> findByPlayerId(Long playerId);
+    List<Offer> findByPlayerIdAndStatus(Long playerId, Offer.Status status);
+    List<Offer> findByScoutIdAndStatusIn(Long scoutId, List<Offer.Status> statuses);
 }
