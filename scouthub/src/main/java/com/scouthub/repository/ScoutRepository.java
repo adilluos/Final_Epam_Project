@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ScoutRepository extends JpaRepository<Scout, Long> {
     Optional<Scout> findByUsernameOrEmail(String username, String email);
+    Optional<Scout> findByUsername(String username);
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h3 th:text="${player.name}"></h3><h3 th:text="${player.surname}"></h3>
+                        <h5 th:text="${player.username}"}></h5>
+                        <h5>Player</h5>
+                        <h5 th:text="${player.dateOfBirth}">Date of birth: </h5>
+                        <h5 th:text="${player.gender}"></h5>
+                        <h5 th:text="${player.nationality}"></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <b>Club: </b><p th:text="${player.club}"></p>
+                        <b>Position: </b><p th:text="${player.position}"></p>
+                    </div>
+                </div>
+                <br>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

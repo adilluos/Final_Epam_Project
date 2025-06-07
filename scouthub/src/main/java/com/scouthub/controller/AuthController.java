@@ -33,10 +33,10 @@ public class AuthController {
         return ResponseEntity.ok(created);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-        LoginResponse responce = authService.login(request);
-        return responce.isSuccess() ? ResponseEntity.ok(responce) : ResponseEntity.status(401).body(responce);
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+//        LoginResponse responce = authService.login(request);
+//        return responce.isSuccess() ? ResponseEntity.ok(responce) : ResponseEntity.status(401).body(responce);
+//    }
 
 }

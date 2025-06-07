@@ -11,4 +11,5 @@ public interface PlayerService {
     List<Player> getAllPlayers();
     Player updatePlayer(Long id, Player updatedPlayer);
     void deletePlayer(Long id);
+    Player getPlayerByUsername(String username);
 }

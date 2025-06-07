@@ -11,4 +11,5 @@ public interface ScoutService {
     List<Scout> getAllScouts();
     Scout updateScout(Long id, Scout updatedScout);
     void deleteScout(Long id);
+    Scout getScoutByUsername(String username);
 }

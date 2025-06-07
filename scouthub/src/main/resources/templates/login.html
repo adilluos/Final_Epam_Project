@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="text-center">
+<form class="form-signin" style="width: 50%; margin: 0 auto;" th:action="@{/login}" method="post">
+    <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <div class="form-floating">
+        <label for="username" class="sr-only">Username or Email</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Username or Email" required autofocus>
+    </div>
+    <div class="form-floating">
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+    </div>
+
+    <div th:if="${param.error}" class="alert alert-danger">
+        Invalid username or password.
+    </div>
+
+    <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+</form>
+</body>
+</html>

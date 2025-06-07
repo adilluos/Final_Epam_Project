@@ -3,6 +3,7 @@ package com.scouthub.service;
 import com.scouthub.model.Scout;
 import com.scouthub.repository.ScoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,5 +44,11 @@ public class ScoutServiceImpl implements ScoutService{
     @Override
     public void deleteScout(Long id) {
         scoutRepository.deleteById(id);
+    }
+
+    @Override
+    public Scout getScoutByUsername(String username) {
+        return scoutRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Scout not Found! !"));
     }
 }
