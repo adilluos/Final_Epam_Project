@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Results Players</title>
+  <title>Offer Form</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <style>
@@ -85,31 +85,27 @@
 <body>
 <div class="album py-5 bg-body-tertiary">
   <div class="container">
-    <h2>Search Results</h2>
-    <div th:if="${#lists.isEmpty(players)}">
-      <p>No matching players found.</p>
-    </div>
-    <div th:each="entry : ${players}" class="card mt-3 p-3">
-      <h4 th:text="${entry.player.name + ' ' + entry.player.surname}"></h4>
-      <p th:text="'Username: ' + ${entry.player.username}"></p>
-      <p th:text="'Club: ' + ${entry.player.club}"></p>
-      <p th:text="'Nationality: ' + ${entry.player.nationality}"></p>
-      <p th:text="'Goals (avg): ' + ${entry.stats.goals}"></p>
-      <p th:text="'Assists (avg): ' + ${entry.stats.assists}"></p>
-      <p th:text="'Passes (avg): ' + ${entry.stats.passes}"></p>
-      <p th:text="'Key Passes (avg): ' + ${entry.stats.keyPasses}"></p>
-      <p th:text="'Pass Completion Rate (avg): ' + ${entry.stats.passCompletionRate}"></p>
-      <p th:text="'Dribble Success Rate (avg): ' + ${entry.stats.dribbleSuccessRate}"></p>
-      <p th:text="'Tackles Won (avg): ' + ${entry.stats.tacklesWon}"></p>
-      <p th:text="'Blocks (avg): ' + ${entry.stats.blocks}"></p>
-      <p th:text="'Distance Covered (avg): ' + ${entry.stats.distanceCovered}"></p>
-      <p th:text="'Saves (avg): ' + ${entry.stats.saves}"></p>
-      <p th:text="'Goals Prevented (avg): ' + ${entry.stats.goalsPrevented}"></p>
-      <form th:action="@{/scout/offer/new}" method="get">
-        <input type="hidden" name="playerId" th:value="${entry.player.id}" />
-        <button type="submit" class="btn btn-primary">Send Offer</button>
-      </form>
-    </div>
+    <h2>Send Offer to Player</h2>
+    <form th:action="@{/scout/offer/send}" th:object="${offerRequest}" method="post">
+      <input type="hidden" th:field="*{playerId}" />
+
+      <div class="form-group">
+        <label for="contractType">Contract Type</label>
+        <input type="text" id="contractType" class="form-control" th:field="*{contractType}" required />
+      </div>
+
+      <div class="form-group">
+        <label for="salary">Salary</label>
+        <input type="number" id="salary" class="form-control" th:field="*{salary}" required />
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" class="form-control" th:field="*{message}" rows="3"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-success mt-3">Send Offer</button>
+    </form>
   </div>
 </div>
 </body>

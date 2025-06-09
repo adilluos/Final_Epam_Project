@@ -3,6 +3,7 @@ package com.scouthub.service;
 import com.scouthub.dto.NotificationDto;
 import com.scouthub.dto.OfferRequest;
 import com.scouthub.dto.OfferResponse;
+import com.scouthub.dto.OfferViewDto;
 import com.scouthub.model.Offer;
 import com.scouthub.model.Player;
 import com.scouthub.model.Scout;
@@ -140,6 +141,24 @@ public class OfferServiceImpl implements OfferService{
                         offer.getTimestamp()
                 ))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OfferViewDto> getOffersForView(Long scoutId) {
+        return offerRepository.findByScoutId(scoutId).stream()
+                .map(offer -> {
+                    OfferViewDto dto = new OfferViewDto();
+                    dto.setId(offer.getId());
+                    dto.setContractType(offer.getContractType());
+                    dto.setSalary(offer.getSalary());
+                    dto.setStatus(offer.getStatus().toString());
+                    dto.setTimestamp(offer.getTimestamp());
+                    dto.setPlayerName(offer.getPlayer().getName());
+                    dto.setPlayerSurname(offer.getPlayer().getSurname());
+                    dto.setPlayerClub(offer.getPlayer().getClub());
+                    return dto;
+                })
+                .toList();
     }
 
     private OfferResponse toDto(Offer offer) {

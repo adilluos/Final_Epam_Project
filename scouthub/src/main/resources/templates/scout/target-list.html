@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Results Players</title>
+  <title>Target List</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <style>
@@ -85,30 +85,17 @@
 <body>
 <div class="album py-5 bg-body-tertiary">
   <div class="container">
-    <h2>Search Results</h2>
-    <div th:if="${#lists.isEmpty(players)}">
-      <p>No matching players found.</p>
+    <h2>Your Target List</h2>
+
+    <div th:if="${#lists.isEmpty(offers)}">
+      <p>You have not sent any offers yet.</p>
     </div>
-    <div th:each="entry : ${players}" class="card mt-3 p-3">
-      <h4 th:text="${entry.player.name + ' ' + entry.player.surname}"></h4>
-      <p th:text="'Username: ' + ${entry.player.username}"></p>
-      <p th:text="'Club: ' + ${entry.player.club}"></p>
-      <p th:text="'Nationality: ' + ${entry.player.nationality}"></p>
-      <p th:text="'Goals (avg): ' + ${entry.stats.goals}"></p>
-      <p th:text="'Assists (avg): ' + ${entry.stats.assists}"></p>
-      <p th:text="'Passes (avg): ' + ${entry.stats.passes}"></p>
-      <p th:text="'Key Passes (avg): ' + ${entry.stats.keyPasses}"></p>
-      <p th:text="'Pass Completion Rate (avg): ' + ${entry.stats.passCompletionRate}"></p>
-      <p th:text="'Dribble Success Rate (avg): ' + ${entry.stats.dribbleSuccessRate}"></p>
-      <p th:text="'Tackles Won (avg): ' + ${entry.stats.tacklesWon}"></p>
-      <p th:text="'Blocks (avg): ' + ${entry.stats.blocks}"></p>
-      <p th:text="'Distance Covered (avg): ' + ${entry.stats.distanceCovered}"></p>
-      <p th:text="'Saves (avg): ' + ${entry.stats.saves}"></p>
-      <p th:text="'Goals Prevented (avg): ' + ${entry.stats.goalsPrevented}"></p>
-      <form th:action="@{/scout/offer/new}" method="get">
-        <input type="hidden" name="playerId" th:value="${entry.player.id}" />
-        <button type="submit" class="btn btn-primary">Send Offer</button>
-      </form>
+
+    <div th:each="offer : ${offers}" class="card mb-3 p-3">
+      <h4 th:text="'Player: ' + ${offer.playerName} + ' ' + ${offer.playerSurname}"></h4>
+      <p th:text="'Club: ' + ${offer.playerClub}"></p> <!-- You may want to include club in OfferResponse -->
+      <p th:text="'Sent: ' + ${#temporals.format(offer.timestamp, 'dd MMM yyyy HH:mm')}"></p>
+      <p th:text="'Status: ' + ${offer.status}"></p>
     </div>
   </div>
 </div>
