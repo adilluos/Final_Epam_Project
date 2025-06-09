@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile</title>
+  <title>Search Players</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <style>
@@ -69,7 +69,7 @@
           <ul class="dropdown-menu text-small" style="">
             <li><a class="dropdown-item" href="/scout/profile">Profile</a></li>
             <li><a class="dropdown-item" href="/">Notifications</a></li>
-            <li><a class="dropdown-item" href="/scout/search">Search players</a></li>
+            <li><a class="dropdown-item" href="/">Search players</a></li>
             <li><a class="dropdown-item" href="/">Target list</a></li>
             <li><a class="dropdown-item" href="/scout/profile">Profile settings</a></li>
             <li>
@@ -85,28 +85,26 @@
 <body>
 <div class="album py-5 bg-body-tertiary">
   <div class="container">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
-      <div class="col-md-4">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <h3 th:text="${scout.name}"></h3><h3 th:text="${scout.surname}"></h3>
-            <h5 th:text="${scout.username}"}></h5>
-            <h5>Scout</h5>
-            <h5 th:text="${scout.dateOfBirth}">Date of birth: </h5>
-            <h5 th:text="${scout.gender}"></h5>
-            <h5 th:text="${scout.nationality}"></h5>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-8">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <b>Club: </b><p th:text="${scout.club}"></p>
-          </div>
-        </div>
-        <br>
-
-      </div>
+    <h2>Search Results</h2>
+    <div th:if="${#lists.isEmpty(players)}">
+      <p>No matching players found.</p>
+    </div>
+    <div th:each="entry : ${players}" class="card mt-3 p-3">
+      <h4 th:text="${entry.player.name + ' ' + entry.player.surname}"></h4>
+      <p th:text="'Username: ' + ${entry.player.username}"></p>
+      <p th:text="'Club: ' + ${entry.player.club}"></p>
+      <p th:text="'Nationality: ' + ${entry.player.nationality}"></p>
+      <p th:text="'Goals (avg): ' + ${entry.stats.goals}"></p>
+      <p th:text="'Assists (avg): ' + ${entry.stats.assists}"></p>
+      <p th:text="'Passes (avg): ' + ${entry.stats.passes}"></p>
+      <p th:text="'Key Passes (avg): ' + ${entry.stats.keyPasses}"></p>
+      <p th:text="'Pass Completion Rate (avg): ' + ${entry.stats.passCompletionRate}"></p>
+      <p th:text="'Dribble Success Rate (avg): ' + ${entry.stats.dribbleSuccessRate}"></p>
+      <p th:text="'Tackles Won (avg): ' + ${entry.stats.tacklesWon}"></p>
+      <p th:text="'Blocks (avg): ' + ${entry.stats.blocks}"></p>
+      <p th:text="'Distance Covered (avg): ' + ${entry.stats.distanceCovered}"></p>
+      <p th:text="'Saves (avg): ' + ${entry.stats.saves}"></p>
+      <p th:text="'Goals Prevented (avg): ' + ${entry.stats.goalsPrevented}"></p>
     </div>
   </div>
 </div>

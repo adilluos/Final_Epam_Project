@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile</title>
+  <title>Search Players</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <style>
@@ -69,7 +69,7 @@
           <ul class="dropdown-menu text-small" style="">
             <li><a class="dropdown-item" href="/scout/profile">Profile</a></li>
             <li><a class="dropdown-item" href="/">Notifications</a></li>
-            <li><a class="dropdown-item" href="/scout/search">Search players</a></li>
+            <li><a class="dropdown-item" href="/">Search players</a></li>
             <li><a class="dropdown-item" href="/">Target list</a></li>
             <li><a class="dropdown-item" href="/scout/profile">Profile settings</a></li>
             <li>
@@ -85,29 +85,30 @@
 <body>
 <div class="album py-5 bg-body-tertiary">
   <div class="container">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
-      <div class="col-md-4">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <h3 th:text="${scout.name}"></h3><h3 th:text="${scout.surname}"></h3>
-            <h5 th:text="${scout.username}"}></h5>
-            <h5>Scout</h5>
-            <h5 th:text="${scout.dateOfBirth}">Date of birth: </h5>
-            <h5 th:text="${scout.gender}"></h5>
-            <h5 th:text="${scout.nationality}"></h5>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-8">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <b>Club: </b><p th:text="${scout.club}"></p>
-          </div>
-        </div>
-        <br>
+    <form th:action="@{/scout/search/results}" method="get" th:object="${filters}">
+      <input type="text" th:field="*{username}" placeholder="Username"/>
+      <input type="text" th:field="*{name}" placeholder="Name"/>
+      <input type="text" th:field="*{surname}" placeholder="Surname"/>
+      <input type="text" th:field="*{nationality}" placeholder="Nationality"/>
+      <input type="text" th:field="*{club}" placeholder="Club"/>
+      <input type="date" th:field="*{dateOfBirth}" />
+      <input type="text" th:field="*{gender}" placeholder="Gender"/>
+      <input type="text" th:field="*{position}" placeholder="Position"/>
 
-      </div>
-    </div>
+      <input type="number" step="0.01" th:field="*{minAvgGoals}" placeholder="Min Avg Goals"/>
+      <input type="number" step="0.01" th:field="*{minAvgAssists}" placeholder="Min Avg Assists"/>
+      <input type="number" step="0.01" th:field="*{minAvgPasses}" placeholder="Min Avg Passes"/>
+      <input type="number" step="0.01" th:field="*{minAvgKeyPasses}" placeholder="Min Avg Key Passes"/>
+      <input type="number" step="0.01" th:field="*{minAvgPassCompletionRate}" placeholder="Min Avg Pass Completion Rate"/>
+      <input type="number" step="0.01" th:field="*{minAvgDribbleSuccessRate}" placeholder="Min Avg Dribble Success Rate"/>
+      <input type="number" step="0.01" th:field="*{minAvgTacklesWon}" placeholder="Min Avg Tackles Won"/>
+      <input type="number" step="0.01" th:field="*{minAvgBlocks}" placeholder="Min Avg Blocks"/>
+      <input type="number" step="0.01" th:field="*{minAvgDistanceCovered}" placeholder="Min Avg Distance Covered"/>
+      <input type="number" step="0.01" th:field="*{minAvgSaves}" placeholder="Min Avg Saves"/>
+      <input type="number" step="0.01" th:field="*{minAvgGoalsPrevented}" placeholder="Min Avg Goals Prevented"/>
+
+      <button type="submit">Search</button>
+    </form>
   </div>
 </div>
 </body>
