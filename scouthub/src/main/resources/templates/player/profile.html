@@ -97,6 +97,27 @@
                         <h5 th:text="${player.nationality}"></h5>
                     </div>
                 </div>
+                <h3 class="mt-4">Average Stats</h3>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <ul>
+                            <li th:text="'Goals: ' + ${#numbers.formatDecimal(averageStats.goals, 1, 2)}"></li>
+                            <li th:text="'Assists: ' + ${#numbers.formatDecimal(averageStats.assists, 1, 2)}"></li>
+                            <li th:text="'Passes: ' + ${#numbers.formatDecimal(averageStats.passes, 1, 2)}"></li>
+                            <li th:text="'Key Passes: ' + ${#numbers.formatDecimal(averageStats.keyPasses, 1, 2)}"></li>
+                            <li th:text="'Pass Completion Rate: ' + ${#numbers.formatDecimal(averageStats.passCompletionRate, 1, 2)} + '%'"></li>
+                            <li th:text="'Dribble Success Rate: ' + ${#numbers.formatDecimal(averageStats.dribbleSuccessRate, 1, 2)} + '%'"></li>
+                            <li th:text="'Tackles Won: ' + ${#numbers.formatDecimal(averageStats.tacklesWon, 1, 2)}"></li>
+                            <li th:text="'Blocks: ' + ${#numbers.formatDecimal(averageStats.blocks, 1, 2)}"></li>
+                            <li th:text="'Distance Covered: ' + ${#numbers.formatDecimal(averageStats.distanceCovered, 1, 2)} + ' km'"></li>
+
+                            <div th:if="${averageStats.saves != null}">
+                                <li th:text="'Saves: ' + ${#numbers.formatDecimal(averageStats.saves, 1, 2)}"></li>
+                                <li th:text="'Goals Prevented: ' + ${#numbers.formatDecimal(averageStats.goalsPrevented, 1, 2)}"></li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div class="col-md-8">
                 <div class="card shadow-sm">
@@ -108,7 +129,41 @@
                     </div>
                 </div>
                 <br>
+                <h3 class="mt-4">Match History</h3>
 
+                <div th:if="${#lists.isEmpty(player.matches)}">
+                    <p>No matches recorded yet.</p>
+                </div>
+
+                <div th:each="match : ${player.matches}" class="card mb-3 shadow-sm">
+                    <div class="card-body">
+                        <h5 th:text="'Date: ' + ${match.matchDate} + ', Tournament: ' + ${match.tournament}"></h5>
+                        <p th:text="${match.ownTeam} + ' vs. ' + ${match.opponentTeam}"></p>
+
+                        <div th:if="${match.goalkeeper}">
+                            <p><strong>Goalkeeper Stats</strong></p>
+                            <ul>
+                                <li th:text="'Saves: ' + ${match.stats.saves}"></li>
+                                <li th:text="'Goals Prevented: ' + ${match.stats.goalsPrevented}"></li>
+                            </ul>
+                        </div>
+
+                        <div th:unless="${match.goalkeeper}">
+                            <p><strong>Field Player Stats</strong></p>
+                            <ul>
+                                <li th:text="'Goals: ' + ${match.stats.goals}"></li>
+                                <li th:text="'Assists: ' + ${match.stats.assists}"></li>
+                                <li th:text="'Passes: ' + ${match.stats.passes}"></li>
+                                <li th:text="'Key Passes: ' + ${match.stats.keyPasses}"></li>
+                                <li th:text="'Pass Completion Rate: ' + ${match.stats.passCompletionRate} + '%'"></li>
+                                <li th:text="'Dribble Success Rate: ' + ${match.stats.dribbleSuccessRate} + '%'"></li>
+                                <li th:text="'Tackles Won: ' + ${match.stats.tacklesWon}"></li>
+                                <li th:text="'Blocks: ' + ${match.stats.blocks}"></li>
+                                <li th:text="'Distance Covered: ' + ${match.stats.distanceCovered} + ' km'"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
