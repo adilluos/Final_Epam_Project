@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Role</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="text-center">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Choose Role</title>
+</head>
+<body>
+<div class="album py-5 bg-body-tertiary">
+  <div class="container">
+    <form th:action="@{/register/scout}" method="post" th:object="${scoutDto}">
+      <input type="text" th:field="*{username}" placeholder="Username" required />
+      <input type="password" th:field="*{password}" placeholder="Password" required />
+      <input type="password" th:field="*{repeatPassword}" placeholder="Confirm Password" required />
+      <input type="email" th:field="*{email}" placeholder="Email" required />
+      <input type="text" th:field="*{phone}" placeholder="Phone" />
+      <input type="text" th:field="*{name}" placeholder="Name" required />
+      <input type="text" th:field="*{surname}" placeholder="Surname" required />
+      <input type="date" th:field="*{dateOfBirth}" required />
+      <input type="text" th:field="*{gender}" placeholder="Gender" required />
+      <input type="text" th:field="*{nationality}" placeholder="Nationality" required />
+      <input type="text" th:field="*{club}" placeholder="Club" required />
+      <button type="submit">Register</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

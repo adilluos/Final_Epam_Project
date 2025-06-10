@@ -26,6 +26,9 @@ public abstract class UserAccount {
     @Column(nullable = false)
     private String password;
 
+    @Transient
+    private String confirmPassword;
+
     @Column(nullable = false, unique = true)
     private String email;
     private String phone;
