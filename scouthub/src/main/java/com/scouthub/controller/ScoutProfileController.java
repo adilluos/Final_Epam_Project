@@ -72,4 +72,12 @@ public class ScoutProfileController {
         model.addAttribute("offers", offers);
         return "scout/target-list";
     }
+
+    @GetMapping("/notifications")
+    public String notificationPage(Model model, Principal principal) {
+        Scout scout = scoutService.getScoutByUsername(principal.getName());
+        List<NotificationDto> notifications = offerService.getNotificationsForScout(scout.getId());
+        model.addAttribute("notifications", notifications);
+        return "scout/notifications";
+    }
 }

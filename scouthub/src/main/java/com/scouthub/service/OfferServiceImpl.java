@@ -133,10 +133,10 @@ public class OfferServiceImpl implements OfferService{
                         offer.getScout().getName() + " " + offer.getScout().getSurname() + " sent you an offer.",
                         offer.getContractType(),
                         offer.getSalary(),
-                        offer.getContactEmail(),
-                        offer.getContactPhone(),
-                        offer.getScout().getName() + offer.getScout().getSurname(),
-                        offer.getPlayer().getName() +offer.getPlayer().getSurname(),
+                        offer.getPlayer().getEmail(),
+                        offer.getPlayer().getPhone(),
+                        offer.getScout().getName() + " " + offer.getScout().getSurname(),
+                        offer.getPlayer().getName() + " " + offer.getPlayer().getSurname(),
                         offer.getStatus().toString(),
                         offer.getTimestamp()
                 ))

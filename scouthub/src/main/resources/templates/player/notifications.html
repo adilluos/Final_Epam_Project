@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile</title>
+  <title>Notifications</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <style>
@@ -68,9 +68,9 @@
           </label>
           <ul class="dropdown-menu text-small" style="">
             <li><a class="dropdown-item" href="/scout/profile">Profile</a></li>
-            <li><a class="dropdown-item" href="/scout/notifications">Notifications</a></li>
-            <li><a class="dropdown-item" href="/scout/search">Search players</a></li>
-            <li><a class="dropdown-item" href="/scout/target-list">Target list</a></li>
+            <li><a class="dropdown-item" href="/">Notifications</a></li>
+            <li><a class="dropdown-item" href="/">Search players</a></li>
+            <li><a class="dropdown-item" href="/">Target list</a></li>
             <li><a class="dropdown-item" href="/scout/profile">Profile settings</a></li>
             <li>
               <hr class="dropdown-divider">
@@ -85,28 +85,21 @@
 <body>
 <div class="album py-5 bg-body-tertiary">
   <div class="container">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
-      <div class="col-md-4">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <h3 th:text="${scout.name}"></h3><h3 th:text="${scout.surname}"></h3>
-            <h5 th:text="${scout.username}"}></h5>
-            <h5>Scout</h5>
-            <h5 th:text="${scout.dateOfBirth}">Date of birth: </h5>
-            <h5 th:text="${scout.gender}"></h5>
-            <h5 th:text="${scout.nationality}"></h5>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-8">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <b>Club: </b><p th:text="${scout.club}"></p>
-          </div>
-        </div>
-        <br>
-
-      </div>
+    <h2>Offers</h2>
+    <div th:if="${#lists.isEmpty(offers)}">
+      <p>No offers yet.</p>
+    </div>
+    <div th:each="offer : ${offers}" class="card mt-3 p-3">
+      <p th:text="'Message: ' + ${offer.message}"></p>
+      <p th:text="'Salary: $' + ${offer.salary}"></p>
+      <p th:text="'Type: ' + ${offer.contractType}"></p>
+      <p th:text="'Scout's email: ' + ${offer.contactEmail}"></p>
+      <p th:text="'Scout's phone: ' + ${offer.contactPhone}"></p>
+      <p th:text="'Status: ' + ${offer.status}"></p>
+      <form th:action="@{'/player/offers/' + ${offer.id} + '/respond'}" method="post">
+        <button type="submit" name="action" value="accept" class="btn btn-success">Accept</button>
+        <button type="submit" name="action" value="decline" class="btn btn-danger">Decline</button>
+      </form>
     </div>
   </div>
 </div>
