@@ -1,14 +1,17 @@
 package com.scouthub.controller;
 
 import com.scouthub.dto.*;
+import com.scouthub.model.Player;
 import com.scouthub.model.Scout;
 import com.scouthub.service.OfferService;
 import com.scouthub.service.PlayerService;
 import com.scouthub.service.ScoutService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
@@ -16,6 +19,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/scout")
 public class ScoutProfileController {
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     private final ScoutService scoutService;
     private final PlayerService playerService;
@@ -79,5 +85,40 @@ public class ScoutProfileController {
         List<NotificationDto> notifications = offerService.getNotificationsForScout(scout.getId());
         model.addAttribute("notifications", notifications);
         return "scout/notifications";
+    }
+
+    @GetMapping("/edit-profile")
+    public String editForm(Model model, Principal principal) {
+        Scout scout = scoutService.getScoutByUsername(principal.getName());
+        model.addAttribute("scout", scout);
+        return "scout/edit-profile";
+    }
+
+    @PostMapping("/edit-profile")
+    public String processEdit(@ModelAttribute("scout") Scout formScout,
+                              @RequestParam(required = false) String newPassword,
+                              @RequestParam(required = false) String repeatPassword,
+                              Principal principal,
+                              RedirectAttributes redirectAttributes) {
+        Scout existingScout = scoutService.getScoutByUsername(principal.getName());
+
+        if (formScout.getName() != null) existingScout.setName(formScout.getName());
+        if (formScout.getSurname() != null) existingScout.setSurname(formScout.getSurname());
+        if (formScout.getDateOfBirth() != null) existingScout.setDateOfBirth(formScout.getDateOfBirth());
+        if (formScout.getGender() != null) existingScout.setGender(formScout.getGender());
+        if (formScout.getNationality() != null) existingScout.setNationality(formScout.getNationality());
+        if (formScout.getClub() != null) existingScout.setClub(formScout.getClub());
+
+        if (newPassword != null && !newPassword.isBlank()) {
+            if (!newPassword.equals(repeatPassword)) {
+                redirectAttributes.addFlashAttribute("error", "Passwords do not match.");
+                return "redirect:/scout/edit";
+            }
+            existingScout.setPassword(passwordEncoder.encode(newPassword));
+        }
+
+        scoutService.updateScout(existingScout.getId(), existingScout);
+        redirectAttributes.addFlashAttribute("success", "Profile updated successfully!");
+        return "redirect:/scout/profile";
     }
 }
