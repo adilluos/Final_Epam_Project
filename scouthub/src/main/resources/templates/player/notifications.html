@@ -67,7 +67,7 @@
             <span class="navbar-toggler-icon"></span>
           </label>
           <ul class="dropdown-menu text-small" style="">
-            <li><a class="dropdown-item" href="/player/profile">Profile settings</a></li>
+            <li><a class="dropdown-item" href="/player/profile">Profile</a></li>
             <li><a class="dropdown-item" href="/player/notifications">Notifications</a></li>
             <li><a class="dropdown-item" href="/player/match/new">Add match</a></li>
             <li><a class="dropdown-item" href="/player/edit-profile">Profile settings</a></li>
@@ -92,8 +92,10 @@
       <p th:text="'Message: ' + ${offer.message}"></p>
       <p th:text="'Salary: $' + ${offer.salary}"></p>
       <p th:text="'Type: ' + ${offer.contractType}"></p>
-      <p th:text="'Scout's email: ' + ${offer.contactEmail}"></p>
-      <p th:text="'Scout's phone: ' + ${offer.contactPhone}"></p>
+      <p th:text="'Scout\'s email: ' + ${offer.contactEmail}"></p>
+      <p th:if="${offer.contactPhone != null and !offer.contactPhone.isEmpty()}"
+         th:text="'Scout\'s phone: ' + ${offer.contactPhone}"></p>
+      <p th:if="${offer.contactPhone == null or offer.contactPhone.isEmpty()}">Scout's phone: Not provided</p>
       <p th:text="'Status: ' + ${offer.status}"></p>
       <form th:action="@{'/player/offers/' + ${offer.id} + '/respond'}" method="post">
         <button type="submit" name="action" value="accept" class="btn btn-success">Accept</button>

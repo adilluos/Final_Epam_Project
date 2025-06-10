@@ -94,7 +94,9 @@
       <p th:text="'To: ' + ${note.senderName}"></p>
       <b th:text="'Status: ' + ${note.status}"></b>
       <p th:text="'Email: ' + ${note.contactEmail}"></p>
-      <p th:text="'Phone: ' + ${note.contactPhone}"></p>
+      <p th:if="${note.contactPhone != null and !note.contactPhone.isEmpty()}"
+         th:text="Phone: ' + ${note.contactPhone}"></p>
+      <p th:if="${note.contactPhone == null or note.contactPhone.isEmpty()}">Scout's phone: Not provided</p>
       <small class="text-muted" th:text="${#temporals.format(note.timestamp, 'dd-MM-yyyy HH:mm')}"></small>
     </div>
   </div>
