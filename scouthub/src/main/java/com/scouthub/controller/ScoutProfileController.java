@@ -99,7 +99,7 @@ public class ScoutProfileController {
                               @RequestParam(required = false) String newPassword,
                               @RequestParam(required = false) String repeatPassword,
                               Principal principal,
-                              RedirectAttributes redirectAttributes) {
+                              Model model) {
         Scout existingScout = scoutService.getScoutByUsername(principal.getName());
 
         if (formScout.getName() != null) existingScout.setName(formScout.getName());
@@ -111,14 +111,17 @@ public class ScoutProfileController {
 
         if (newPassword != null && !newPassword.isBlank()) {
             if (!newPassword.equals(repeatPassword)) {
-                redirectAttributes.addFlashAttribute("error", "Passwords do not match.");
-                return "redirect:/scout/edit";
+                model.addAttribute("error", "Passwords do not match.");
+                model.addAttribute("scout", existingScout); // Keep form data
+                return "scout/edit-profile";
             }
             existingScout.setPassword(passwordEncoder.encode(newPassword));
         }
 
         scoutService.updateScout(existingScout.getId(), existingScout);
-        redirectAttributes.addFlashAttribute("success", "Profile updated successfully!");
-        return "redirect:/scout/profile";
+        model.addAttribute("success", "Profile updated successfully!");
+        model.addAttribute("scout", existingScout); // updated version
+
+        return "scout/edit-profile";
     }
 }

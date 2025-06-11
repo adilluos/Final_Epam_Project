@@ -90,9 +90,9 @@
         <div class="card shadow-sm">
           <div class="card-body">
             <h3 th:text="${scout.name}"></h3><h3 th:text="${scout.surname}"></h3>
-            <h5 th:text="${scout.username}"}></h5>
-            <h5>Scout</h5>
-            <h5 th:text="${scout.dateOfBirth}">Date of birth: </h5>
+            <h5 th:text="'@' + ${scout.username}"></h5>
+            <h5><em>Role: Scout</em></h5>
+            <h5 th:text="'Date of Birth: ' + ${#temporals.format(scout.dateOfBirth, 'd MMMM yyyy')}"></h5>
             <h5 th:text="${scout.gender}"></h5>
             <h5 th:text="${scout.nationality}"></h5>
           </div>

@@ -52,27 +52,57 @@ public class RegistrationController {
 
     @PostMapping("/player")
     public String registerPlayer(@ModelAttribute("playerDto") PlayerRegistrationRequest dto,
+                                 Model model,
                                  RedirectAttributes redirectAttributes) {
         try {
             authService.registerPlayer(dto);
-            redirectAttributes.addFlashAttribute("success", "Registration successful!");
             return "redirect:/player/profile";
         } catch (IllegalArgumentException ex) {
-            redirectAttributes.addFlashAttribute("error", ex.getMessage());
-            return "redirect:/register/player";
+            model.addAttribute("error", ex.getMessage());
+            model.addAttribute("playerDto", dto);  // re-fill form values
+            return "register/player-form";
+        } catch (Exception ex) {
+            model.addAttribute("error", "Registration failed: " + extractMeaningfulMessage(ex));
         }
+
+        model.addAttribute("playerDto", dto);
+        return "register/player-form";
     }
 
     @PostMapping("/scout")
     public String registerScout(@ModelAttribute("scoutDto") ScoutRegistrationRequest dto,
+                                Model model,
                                 RedirectAttributes redirectAttributes) {
         try {
             authService.registerScout(dto);
-            redirectAttributes.addFlashAttribute("success", "Registration successful!");
             return "redirect:/scout/profile";
         } catch (IllegalArgumentException ex) {
-            redirectAttributes.addFlashAttribute("error", ex.getMessage());
-            return "redirect:/scout/player";
+            model.addAttribute("error", ex.getMessage());
+            model.addAttribute("scoutDto", dto);  // re-fill form values
+            return "register/scout-form";
+        } catch (Exception ex) {
+            model.addAttribute("error", "Registration failed: " + extractMeaningfulMessage(ex));
         }
+
+        model.addAttribute("scoutDto", dto); // preserve form data
+        return "register/scout-form";
     }
+
+    private String extractMeaningfulMessage(Exception ex) {
+        Throwable root = ex;
+        while (root.getCause() != null) {
+            root = root.getCause();
+        }
+
+        String msg = root.getMessage().toLowerCase();
+
+        if (msg.contains("user_account.username") || msg.contains("unique constraint") && msg.contains("username")) {
+            return "Username already exists.";
+        } else if (msg.contains("user_account.email") || msg.contains("unique constraint") && msg.contains("email")) {
+            return "Email already exists.";
+        }
+
+        return "Unexpected error occurred. Please try again.";
+    }
+
 }

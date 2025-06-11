@@ -74,7 +74,7 @@ public class PlayerProfileController {
                               @RequestParam(required = false) String newPassword,
                               @RequestParam(required = false) String repeatPassword,
                               Principal principal,
-                              RedirectAttributes redirectAttributes) {
+                              Model model) {
         Player existingPlayer = playerService.getPlayerByUsername(principal.getName());
         if (formPlayer.getName() != null) existingPlayer.setName(formPlayer.getName());
         if (formPlayer.getSurname() != null) existingPlayer.setSurname(formPlayer.getSurname());
@@ -86,15 +86,17 @@ public class PlayerProfileController {
 
         if (newPassword != null && !newPassword.isBlank()) {
             if (!newPassword.equals(repeatPassword)) {
-                redirectAttributes.addFlashAttribute("error", "Passwords do not match.");
-                return "redirect:/player/edit";
+                model.addAttribute("error", "Passwords do not match.");
+                model.addAttribute("player", existingPlayer); // Keep form data
+                return "player/edit-profile";
             }
             existingPlayer.setPassword(passwordEncoder.encode(newPassword));
         }
 
         playerService.updatePlayer(existingPlayer.getId(), existingPlayer);
-        redirectAttributes.addFlashAttribute("success", "Profile updated successfully!");
-        return "redirect:/player/profile";
+        model.addAttribute("success", "Profile updated successfully!");
+        model.addAttribute("player", existingPlayer); // updated version
 
+        return "player/edit-profile";
     }
 }

@@ -1,8 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head><title>Home</title></head>
-<body>
-<h1 th:text="'Welcome, ' + ${username}">Welcome</h1>
-<a href="/logout">Logout</a>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="text-center">
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="jumbotron mt-3">
+            <h1>Scouthub</h1>
+            <p class="lead">Welcome to scouthub!</p>
+            <p>A place where players and scouts connect!</p>
+            <a class="btn btn-lg btn-primary" href="/login" role="button">Login</a>
+            <a class="btn btn-lg btn-primary" href="/register" role="button">Register</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -90,9 +90,9 @@
                     <div class="card-body">
                         <h3 th:text="${player.name}"></h3>
                         <h3 th:text="${player.surname}"></h3>
-                        <h5 th:text="${player.username}" }></h5>
-                        <h5>Player</h5>
-                        <h5 th:text="${player.dateOfBirth}">Date of birth: </h5>
+                        <h5 th:text="'@' + ${player.username}"></h5>
+                        <h5><em>Role: Player</em></h5>
+                        <h5 th:text="'Date of Birth: ' + ${#temporals.format(player.dateOfBirth, 'd MMMM yyyy')}"></h5>
                         <h5 th:text="${player.gender}"></h5>
                         <h5 th:text="${player.nationality}"></h5>
                     </div>
