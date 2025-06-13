@@ -1,4 +1,4 @@
-package com.scouthub.controller;
+package com.scouthub.controller.api;
 
 import com.scouthub.model.Player;
 import com.scouthub.service.PlayerService;
@@ -10,12 +10,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/players")
-public class PlayerController {
+public class PlayerApiController {
 
     private final PlayerService playerService;
 
     @Autowired
-    public PlayerController(PlayerService playerService) {
+    public PlayerApiController(PlayerService playerService) {
         this.playerService = playerService;
     }
 

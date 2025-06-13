@@ -1,4 +1,4 @@
-package com.scouthub.controller;
+package com.scouthub.controller.view;
 
 import com.scouthub.model.Match;
 import com.scouthub.service.MatchService;

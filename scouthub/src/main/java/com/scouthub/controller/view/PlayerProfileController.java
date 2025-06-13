@@ -1,4 +1,4 @@
-package com.scouthub.controller;
+package com.scouthub.controller.view;
 
 import com.scouthub.dto.OfferResponse;
 import com.scouthub.dto.PlayerAverageStats;
@@ -12,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;

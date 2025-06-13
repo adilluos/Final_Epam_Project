@@ -1,4 +1,4 @@
-package com.scouthub.controller;
+package com.scouthub.controller.api;
 
 
 import com.scouthub.dto.NotificationDto;
@@ -14,11 +14,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/offers")
-public class OfferController {
+public class OfferApiController {
     private final OfferService offerService;
 
     @Autowired
-    public OfferController(OfferService offerService) {
+    public OfferApiController(OfferService offerService) {
         this.offerService = offerService;
     }
 

@@ -1,22 +1,21 @@
-package com.scouthub.controller;
+package com.scouthub.controller.api;
 
 import com.scouthub.model.Scout;
 import com.scouthub.service.ScoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/scouts")
-public class ScoutController {
+public class ScoutApiController {
 
     private final ScoutService scoutService;
 
     @Autowired
-    public ScoutController(ScoutService scoutService) {
+    public ScoutApiController(ScoutService scoutService) {
         this.scoutService = scoutService;
     }
 

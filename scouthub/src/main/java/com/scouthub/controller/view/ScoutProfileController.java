@@ -1,7 +1,6 @@
-package com.scouthub.controller;
+package com.scouthub.controller.view;
 
 import com.scouthub.dto.*;
-import com.scouthub.model.Player;
 import com.scouthub.model.Scout;
 import com.scouthub.service.OfferService;
 import com.scouthub.service.PlayerService;
@@ -11,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;

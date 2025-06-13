@@ -1,7 +1,5 @@
-package com.scouthub.controller;
+package com.scouthub.controller.api;
 
-import com.scouthub.dto.LoginRequest;
-import com.scouthub.dto.LoginResponse;
 import com.scouthub.dto.PlayerRegistrationRequest;
 import com.scouthub.dto.ScoutRegistrationRequest;
 import com.scouthub.model.Player;
@@ -13,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-public class AuthController {
+public class AuthApiController {
     private final AuthService authService;
 
     @Autowired
-    public AuthController(AuthService authService) {
+    public AuthApiController(AuthService authService) {
         this.authService = authService;
     }
 

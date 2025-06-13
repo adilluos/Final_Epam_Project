@@ -1,4 +1,4 @@
-package com.scouthub.controller;
+package com.scouthub.controller.api;
 
 import com.scouthub.model.Match;
 import com.scouthub.model.MatchStats;
@@ -17,13 +17,13 @@ import java.security.Principal;
 
 @Controller
 @RequestMapping("/player/match")
-public class MatchController {
+public class MatchViewController {
 
     private final MatchService matchService;
     private final PlayerService playerService;
 
     @Autowired
-    public MatchController(MatchService matchService, PlayerService playerService) {
+    public MatchViewController(MatchService matchService, PlayerService playerService) {
         this.matchService = matchService;
         this.playerService = playerService;
     }

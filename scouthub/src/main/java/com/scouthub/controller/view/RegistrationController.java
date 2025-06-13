@@ -1,17 +1,13 @@
-package com.scouthub.controller;
+package com.scouthub.controller.view;
 
 import com.scouthub.dto.PlayerRegistrationRequest;
 import com.scouthub.dto.ScoutRegistrationRequest;
-import com.scouthub.model.Player;
-import com.scouthub.model.Scout;
-import com.scouthub.model.UserAccount;
 import com.scouthub.service.AuthService;
 import com.scouthub.service.PlayerService;
 import com.scouthub.service.ScoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
